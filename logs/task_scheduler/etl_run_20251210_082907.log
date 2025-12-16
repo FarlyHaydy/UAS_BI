@@ -1,0 +1,229 @@
+======================================================================== 
+ETL Task Scheduler - Started: 10/12/2025  8:29:07,19 
+Using short path: C:\FILEPE~1\SECDE9~1\FILEMA~1\KECERD~1\FILETU~1\UAS\UAS_DW~1 
+Docker Compose: C:\FILEPE~1\SECDE9~1\FILEMA~1\KECERD~1\FILETU~1\UAS\UAS_DW~1\docker\docker-compose.yml 
+======================================================================== 
+ 
+[1/3] Checking Docker... 
+Docker version 28.4.0, build d8eb465
+[2/3] Checking containers... 
+NAME           IMAGE                   COMMAND                  SERVICE     CREATED       STATUS                 PORTS
+dw_dashboard   docker-dashboard        "streamlit run /app/…"   dashboard   5 hours ago   Up 5 hours (healthy)   0.0.0.0:8501->8501/tcp, [::]:8501->8501/tcp
+dw_etl         docker-etl              "tail -f /dev/null"      etl         5 hours ago   Up 5 hours (healthy)   
+dw_pgadmin     dpage/pgadmin4:latest   "/entrypoint.sh"         pgadmin     5 hours ago   Up 5 hours             0.0.0.0:5050->80/tcp, [::]:5050->80/tcp
+dw_postgres    postgres:18-alpine      "docker-entrypoint.s…"   postgres    5 hours ago   Up 5 hours (healthy)   0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+[3/3] Running ETL... 
+---------------------------------------- 
+
+================================================================================
+[2025-12-10 08:29:17.974814] ETL Started
+Working Directory: /app
+Script Path: /app/scripts/etl/main_etl.py
+Environment: Docker
+================================================================================
+
+
+╔==============================================================================╗
+║               ETL PROCESS - DW PARIWISATA JAKARTA 2025                       ║
+║                    with Disaster Recovery Features                           ║
+╚==============================================================================╝
+
+Started at: 2025-12-10 08:29:17 WITA
+ℹ️  [2025-12-10 08:29:17] ETL - START: Starting full ETL process (Traditional - Transform from staging)
+2025-12-10 08:29:17,984 - utils - INFO - [2025-12-10 08:29:17] ETL - START: Starting full ETL process (Traditional - Transform from staging)
+ℹ️  [2025-12-10 08:29:17] BACKUP - START: Running pre-ETL database backup
+
+================================================================================
+PRE-ETL BACKUP
+================================================================================
+📂 Environment: Docker
+📂 Backup script: /app/scripts/disaster_recovery/backup_database.sh
+2025-12-10 08:29:17,985 - utils - INFO - [2025-12-10 08:29:17] BACKUP - START: Running pre-ETL database backup
+🔄 Executing backup script...
+✅ [2025-12-10 08:29:22] BACKUP - SUCCESS: Pre-ETL backup completed successfully
+✅ Pre-ETL backup completed
+   Backup location: /app/data/backups/
+✅ Safety backup created - ETL can proceed safely
+2025-12-10 08:29:22,527 - utils - INFO - [2025-12-10 08:29:22] BACKUP - SUCCESS: Pre-ETL backup completed successfully
+
+================================================================================
+STEP 1: EXTRACT DATA FROM SOURCES
+================================================================================
+2025-12-10 08:29:22,644 - utils - INFO - [2025-12-10 08:29:22] EXTRACT - START: Reading kunjungan data from Excel
+ℹ️  [2025-12-10 08:29:22] EXTRACT - START: Reading kunjungan data from Excel
+2025-12-10 08:29:22,939 - utils - INFO - [2025-12-10 08:29:22] EXTRACT - INFO: Read 400 rows from Excel
+ℹ️  [2025-12-10 08:29:22] EXTRACT - INFO: Read 400 rows from Excel
+✅ [2025-12-10 08:29:22] EXTRACT - SUCCESS: Extracted 400 records
+✓ Extracted 400 kunjungan records (RAW data)
+2025-12-10 08:29:22,949 - utils - INFO - [2025-12-10 08:29:22] EXTRACT - SUCCESS: Extracted 400 records
+2025-12-10 08:29:22,950 - utils - INFO - [2025-12-10 08:29:22] EXTRACT - START: Reading harga tiket data
+ℹ️  [2025-12-10 08:29:22] EXTRACT - START: Reading harga tiket data
+2025-12-10 08:29:23,007 - utils - INFO - [2025-12-10 08:29:23] EXTRACT - INFO: Read 29 harga records from Excel
+ℹ️  [2025-12-10 08:29:23] EXTRACT - INFO: Read 29 harga records from Excel
+2025-12-10 08:29:23,013 - utils - INFO - [2025-12-10 08:29:23] EXTRACT - INFO: Harga data breakdown:
+ℹ️  [2025-12-10 08:29:23] EXTRACT - INFO: Harga data breakdown:
+ℹ️  [2025-12-10 08:29:23] EXTRACT - INFO:   - Objek wisata gratis: 11
+2025-12-10 08:29:23,014 - utils - INFO - [2025-12-10 08:29:23] EXTRACT - INFO:   - Objek wisata gratis: 11
+ℹ️  [2025-12-10 08:29:23] EXTRACT - INFO:   - Objek wisata berbayar: 18
+2025-12-10 08:29:23,015 - utils - INFO - [2025-12-10 08:29:23] EXTRACT - INFO:   - Objek wisata berbayar: 18
+ℹ️  [2025-12-10 08:29:23] EXTRACT - INFO:   - Harga tiket dewasa range: Rp 2,000 - Rp 25,000
+ℹ️  [2025-12-10 08:29:23] EXTRACT - INFO:   - Harga tiket dewasa rata-rata: Rp 8,222
+2025-12-10 08:29:23,018 - utils - INFO - [2025-12-10 08:29:23] EXTRACT - INFO:   - Harga tiket dewasa range: Rp 2,000 - Rp 25,000
+2025-12-10 08:29:23,019 - utils - INFO - [2025-12-10 08:29:23] EXTRACT - INFO:   - Harga tiket dewasa rata-rata: Rp 8,222
+✅ [2025-12-10 08:29:23] EXTRACT - SUCCESS: Extracted 29 harga records
+✓ Extracted 29 harga records (RAW data)
+
+================================================================================
+STEP 2: LOAD RAW DATA TO STAGING
+================================================================================
+💡 Staging will be used for transformation (Traditional ETL)
+2025-12-10 08:29:23,019 - utils - INFO - [2025-12-10 08:29:23] EXTRACT - SUCCESS: Extracted 29 harga records
+2025-12-10 08:29:23,020 - utils - INFO - [2025-12-10 08:29:23] LOAD - START: Loading to staging_kunjungan_raw
+ℹ️  [2025-12-10 08:29:23] LOAD - START: Loading to staging_kunjungan_raw
+2025-12-10 08:29:23,231 - utils - INFO - [2025-12-10 08:29:23] LOAD - SUCCESS: Loaded 400 records to staging_kunjungan_raw
+✅ [2025-12-10 08:29:23] LOAD - SUCCESS: Loaded 400 records to staging_kunjungan_raw
+✓ Loaded 400 RAW records to staging_kunjungan_raw
+ℹ️  [2025-12-10 08:29:23] LOAD - START: Loading to staging_harga_tiket_raw
+2025-12-10 08:29:23,231 - utils - INFO - [2025-12-10 08:29:23] LOAD - START: Loading to staging_harga_tiket_raw
+2025-12-10 08:29:23,242 - utils - INFO - [2025-12-10 08:29:23] LOAD - SUCCESS: Loaded 29 records to staging_harga_tiket_raw
+✅ [2025-12-10 08:29:23] LOAD - SUCCESS: Loaded 29 records to staging_harga_tiket_raw
+✓ Loaded 29 RAW harga records to staging_harga_tiket_raw
+
+================================================================================
+STEP 3: BUILD DIMENSIONS FROM STAGING DATABASE
+================================================================================
+💡 Reading data FROM staging tables using SQL queries
+ℹ️  [2025-12-10 08:29:23] TRANSFORM - START: Building dim_time FROM staging
+2025-12-10 08:29:23,243 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - START: Building dim_time FROM staging
+2025-12-10 08:29:23,275 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - SUCCESS: Built 8 time records FROM staging
+✅ [2025-12-10 08:29:23] TRANSFORM - SUCCESS: Built 8 time records FROM staging
+ℹ️  [2025-12-10 08:29:23] LOAD - START: Loading to dim_time
+2025-12-10 08:29:23,276 - utils - INFO - [2025-12-10 08:29:23] LOAD - START: Loading to dim_time
+2025-12-10 08:29:23,285 - utils - INFO - [2025-12-10 08:29:23] LOAD - SUCCESS: Inserted 0 new time records
+✅ [2025-12-10 08:29:23] LOAD - SUCCESS: Inserted 0 new time records
+✓ Loaded dim_time (8 records) FROM staging
+2025-12-10 08:29:23,286 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - START: Building dim_objek_wisata FROM staging
+ℹ️  [2025-12-10 08:29:23] TRANSFORM - START: Building dim_objek_wisata FROM staging
+2025-12-10 08:29:23,294 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - SUCCESS: Built 29 objek wisata FROM staging
+✅ [2025-12-10 08:29:23] TRANSFORM - SUCCESS: Built 29 objek wisata FROM staging
+2025-12-10 08:29:23,296 - utils - INFO - [2025-12-10 08:29:23] LOAD - START: Loading to dim_objek_wisata
+ℹ️  [2025-12-10 08:29:23] LOAD - START: Loading to dim_objek_wisata
+2025-12-10 08:29:23,316 - utils - INFO - [2025-12-10 08:29:23] LOAD - SUCCESS: Inserted 0 new objek wisata records
+2025-12-10 08:29:23,317 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - START: Transforming harga data
+✅ [2025-12-10 08:29:23] LOAD - SUCCESS: Inserted 0 new objek wisata records
+✓ Loaded dim_objek_wisata (29 records) FROM staging
+✓ dim_wisatawan already exists (2 records: Nusantara, Mancanegara)
+ℹ️  [2025-12-10 08:29:23] TRANSFORM - START: Transforming harga data
+ℹ️  [2025-12-10 08:29:23] TRANSFORM - INFO: Found 29 objek wisata in database
+2025-12-10 08:29:23,322 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - INFO: Found 29 objek wisata in database
+2025-12-10 08:29:23,335 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - INFO: Harga data statistics:
+ℹ️  [2025-12-10 08:29:23] TRANSFORM - INFO: Harga data statistics:
+2025-12-10 08:29:23,336 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - INFO:   - Total: 29, Gratis: 11, Berbayar: 18
+ℹ️  [2025-12-10 08:29:23] TRANSFORM - INFO:   - Total: 29, Gratis: 11, Berbayar: 18
+2025-12-10 08:29:23,338 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - INFO:   - Average price: Rp 8,222
+ℹ️  [2025-12-10 08:29:23] TRANSFORM - INFO:   - Average price: Rp 8,222
+✅ [2025-12-10 08:29:23] TRANSFORM - SUCCESS: Transformed 29 harga records
+2025-12-10 08:29:23,338 - utils - INFO - [2025-12-10 08:29:23] TRANSFORM - SUCCESS: Transformed 29 harga records
+ℹ️  [2025-12-10 08:29:23] LOAD - START: Loading to dim_price
+2025-12-10 08:29:23,339 - utils - INFO - [2025-12-10 08:29:23] LOAD - START: Loading to dim_price
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: Truncating dim_price table
+2025-12-10 08:29:23,340 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: Truncating dim_price table
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: Inserted: 29, Updated: 0
+2025-12-10 08:29:23,386 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: Inserted: 29, Updated: 0
+2025-12-10 08:29:23,387 - utils - INFO - [2025-12-10 08:29:23] LOAD - SUCCESS: Loaded 29 price records to dim_price
+✅ [2025-12-10 08:29:23] LOAD - SUCCESS: Loaded 29 price records to dim_price
+2025-12-10 08:29:23,389 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: Total records in dim_price: 29
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: Total records in dim_price: 29
+✓ Loaded dim_price (29 records)
+
+================================================================================
+STEP 4: LOAD FACT TABLE FROM STAGING
+================================================================================
+💡 Using SQL JOIN to merge staging with dimensions
+ℹ️  [2025-12-10 08:29:23] LOAD - START: Loading to fact_kunjungan
+2025-12-10 08:29:23,390 - utils - INFO - [2025-12-10 08:29:23] LOAD - START: Loading to fact_kunjungan
+2025-12-10 08:29:23,393 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: Staging stats: 400 total, 8 periodes, 29 objek, 2 wisatawan
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: Staging stats: 400 total, 8 periodes, 29 objek, 2 wisatawan
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: dim_time: 8 records
+2025-12-10 08:29:23,394 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: dim_time: 8 records
+2025-12-10 08:29:23,395 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: dim_objek_wisata: 29 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: dim_objek_wisata: 29 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: dim_wisatawan: 2 records
+2025-12-10 08:29:23,397 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: dim_wisatawan: 2 records
+2025-12-10 08:29:23,419 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: Inserted/Updated 400 fact records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: Inserted/Updated 400 fact records
+2025-12-10 08:29:23,435 - utils - INFO - [2025-12-10 08:29:23] LOAD - SUCCESS: Loaded 400 fact records
+✅ [2025-12-10 08:29:23] LOAD - SUCCESS: Loaded 400 fact records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: Staging records marked as processed
+2025-12-10 08:29:23,436 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: Staging records marked as processed
+2025-12-10 08:29:23,437 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: Total fact_kunjungan records: 400
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: Total fact_kunjungan records: 400
+✓ Loaded fact_kunjungan (400 records) FROM staging
+  ✓ SQL JOIN with dim_time, dim_objek_wisata, dim_wisatawan
+  ✓ Foreign key lookups completed via database
+  ✓ Staging records marked as processed
+
+================================================================================
+STEP 5: DATA QUALITY VERIFICATION
+================================================================================
+ℹ️  [2025-12-10 08:29:23] LOAD - START: Verifying data quality
+2025-12-10 08:29:23,440 - utils - INFO - [2025-12-10 08:29:23] LOAD - START: Verifying data quality
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO: Data quality verification:
+2025-12-10 08:29:23,447 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO: Data quality verification:
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO:   - dim_time: 8 records
+2025-12-10 08:29:23,448 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO:   - dim_time: 8 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO:   - dim_objek_wisata: 29 records
+2025-12-10 08:29:23,448 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO:   - dim_objek_wisata: 29 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO:   - dim_wisatawan: 2 records
+2025-12-10 08:29:23,449 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO:   - dim_wisatawan: 2 records
+2025-12-10 08:29:23,449 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO:   - dim_price: 29 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO:   - dim_price: 29 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO:   - fact_kunjungan: 400 records
+2025-12-10 08:29:23,450 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO:   - fact_kunjungan: 400 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO:   - staging_total: 1600 records
+2025-12-10 08:29:23,451 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO:   - staging_total: 1600 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO:   - staging_processed: 1600 records
+2025-12-10 08:29:23,451 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO:   - staging_processed: 1600 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO:   - staging_unprocessed: 0 records
+2025-12-10 08:29:23,452 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO:   - staging_unprocessed: 0 records
+ℹ️  [2025-12-10 08:29:23] LOAD - INFO:   - orphan_facts: 0 records
+2025-12-10 08:29:23,452 - utils - INFO - [2025-12-10 08:29:23] LOAD - INFO:   - orphan_facts: 0 records
+2025-12-10 08:29:23,453 - utils - INFO - [2025-12-10 08:29:23] LOAD - SUCCESS: No orphan records found
+✅ [2025-12-10 08:29:23] LOAD - SUCCESS: No orphan records found
+
+Data Warehouse Summary:
+--------------------------------------------------------------------------------
+  dim_time                      :          8 records
+  dim_objek_wisata              :         29 records
+  dim_wisatawan                 :          2 records
+  dim_price                     :         29 records
+  fact_kunjungan                :        400 records
+  staging_total                 :      1,600 records
+  staging_processed             :      1,600 records
+  staging_unprocessed           :          0 records
+--------------------------------------------------------------------------------
+
+✅ Data quality check passed - No orphan records
+
+================================================================================
+STEP 6: STAGING CLEANUP
+================================================================================
+✓ Staging data retained for audit trail
+  → All records marked as is_processed = TRUE
+2025-12-10 08:29:23,454 - utils - INFO - [2025-12-10 08:29:23] ETL - SUCCESS: ETL process completed in 0m 5s
+✅ [2025-12-10 08:29:23] ETL - SUCCESS: ETL process completed in 0m 5s
+
+================================================================================
+ETL PROCESS COMPLETED SUCCESSFULLY! ✅
+Total execution time: 0m 5s
+Backup location: /app/data/backups/
+================================================================================
+2025-12-10 08:29:23,454 - utils - INFO - Success notifications disabled (EMAIL_ON_SUCCESS=false)
+
+🎉 ETL completed successfully
+
+Exit code: 0
+---------------------------------------- 
+ 
+SUCCESS: ETL completed 
+======================================================================== 

@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wireframe Dashboard - Layout Fix</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Container utama */
+        .dashboard-container {
+            width: 1000px;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .dashboard-header {
+            background: #f8f9fa;
+            border-bottom: 2px solid #333;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .dashboard-header h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .stat-item {
+            background: #e9ecef;
+            padding: 5px 12px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        /* Main Layout */
+        .dashboard-main {
+            display: flex;
+            min-height: 1300px;
+        }
+
+        /* Sidebar */
+        .dashboard-sidebar {
+            width: 230px;
+            background: #f1f3f5;
+            border-right: 2px solid #333;
+            padding: 20px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .sidebar-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #999;
+        }
+
+        .filter-item {
+            margin-bottom: 15px;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .filter-box {
+            width: 100%;
+            height: 35px;
+            border: 2px solid #777;
+            background: white;
+            padding: 0 10px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Main Content */
+        .dashboard-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* Section */
+        .content-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #333;
+        }
+
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .kpi-box {
+            border: 2px solid #777;
+            padding: 15px;
+            background: #f8f9fa;
+            text-align: center;
+            height: 90px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .kpi-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        /* Charts */
+        .chart-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+            height: 200px;
+        }
+
+        .chart-container {
+            border: 2px solid #777;
+            padding: 15px;
+            background: #f8f9fa;
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .chart-area {
+            height: 140px;
+            background: repeating-linear-gradient(
+                45deg,
+                #e9ecef,
+                #e9ecef 10px,
+                #f8f9fa 10px,
+                #f8f9fa 20px
+            );
+            border: 1px dashed #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* Dual Charts */
+        .dual-charts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+            height: 200px;
+        }
+
+        /* Table */
+        .table-container {
+            border: 2px solid #777;
+            background: #f8f9fa;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .data-table th {
+            background: #e9ecef;
+            border-bottom: 2px solid #333;
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .data-table td {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 8px;
+            color: #555;
+        }
+
+        .data-table tr:nth-child(even) {
+            background: #f1f3f5;
+        }
+
+        /* Activity Log */
+        .activity-log {
+            border: 2px solid #777;
+            padding: 15px;
+            background: #f8f9fa;
+            margin-bottom: 25px;
+        }
+
+        .log-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .log-entry {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #ccc;
+            display: flex;
+            gap: 10px;
+        }
+
+        .log-time {
+            font-weight: bold;
+            color: #333;
+            min-width: 60px;
+        }
+
+        /* Buttons */
+        .button-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .action-button {
+            padding: 10px 20px;
+            border: 2px solid #333;
+            background: white;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Footer */
+        .dashboard-footer {
+            background: #f8f9fa;
+            border-top: 2px solid #333;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .footer-info {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Download Section */
+        .download-panel {
+            background: #f8f9fa;
+            border: 2px dashed #333;
+            padding: 25px;
+            text-align: center;
+            border-radius: 5px;
+            width: 1000px;
+        }
+
+        .download-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .download-button {
+            padding: 15px 30px;
+            background: #333;
+            color: white;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 15px 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-button:hover {
+            background: #555;
+        }
+
+        .download-note {
+            font-size: 13px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-container,
+            .download-panel {
+                width: 100%;
+            }
+            
+            .dashboard-main {
+                flex-direction: column;
+            }
+            
+            .dashboard-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid #333;
+            }
+            
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .chart-row,
+            .dual-charts {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container" id="dashboard-wireframe">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1>Dashboard Kunjungan Wisata DKI Jakarta 2025</h1>
+            <div class="header-stats">
+                <div class="stat-item">Performance: Excellent</div>
+                <div class="stat-item">Usability Score: 9.5/10</div>
+                <div class="stat-item">Load: 0.00s</div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="dashboard-main">
+            <!-- Sidebar -->
+            <div class="dashboard-sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-title">Filter Data</div>
+                    
+                    <div class="filter-item">
+                        <div class="filter-label">Pilih Tahun</div>
+                        <div class="filter-box">▼ Semua</div>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <div class="filter-label">Pilih Bulan</div>
+                        <div class="filter-box">Januari, Februari, Maret</div>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <div class="filter-label">Pilih Wilayah</div>
+                        <div class="filter-box">Jakarta Barat, Pusat, Selatan</div>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <div class="filter-label">Jenis Wisatawan</div>
+                        <div class="filter-box">Wisatawan Nusantara, Mancanegara</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Content Area -->
+            <div class="dashboard-content">
+                <!-- KPI 1 -->
+                <div class="content-section">
+                    <div class="section-title">Key Performance Indicators</div>
+                    <div class="kpi-grid">
+                        <div class="kpi-box">
+                            <div class="kpi-value">19,988,361</div>
+                            <div class="kpi-label">Total Kunjungan</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">29</div>
+                            <div class="kpi-label">Total Objek Wisata</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">2.7%</div>
+                            <div class="kpi-label">Wisatawan Mancanegara</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">49,971</div>
+                            <div class="kpi-label">Rata-rata per Objek</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- KPI 2 -->
+                <div class="content-section">
+                    <div class="section-title">User Behavior Metrics</div>
+                    <div class="kpi-grid">
+                        <div class="kpi-box">
+                            <div class="kpi-value">6s</div>
+                            <div class="kpi-label">Dwell Time</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">2</div>
+                            <div class="kpi-label">Page Views</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">0%</div>
+                            <div class="kpi-label">Bounce Rate</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">0</div>
+                            <div class="kpi-label">Errors</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- KPI 3 -->
+                <div class="content-section">
+                    <div class="section-title">Performance Metrics</div>
+                    <div class="kpi-grid">
+                        <div class="kpi-box">
+                            <div class="kpi-value">0.01s</div>
+                            <div class="kpi-label">Load Time</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">0.048s</div>
+                            <div class="kpi-label">Query Time</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">0.048s</div>
+                            <div class="kpi-label">Avg Query</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">0.03s</div>
+                            <div class="kpi-label">Total Render</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Funnel Analysis -->
+                <div class="content-section">
+                    <div class="section-title">Funnel Analysis</div>
+                    <div class="chart-row">
+                        <div class="chart-container">
+                            <div class="chart-title">User Journey Funnel</div>
+                            <div class="chart-area">
+                                Funnel Chart Area<br>
+                                Landing → KPIs → Filters → Charts → Download
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-title">Conversion Rates</div>
+                            <div class="chart-area">
+                                Landing: 100.0%<br>
+                                View KPIs: 100.0%<br>
+                                Apply Filters: 17.6%<br>
+                                Analyze Charts: 100.0%<br>
+                                Download: 11.8%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Charts -->
+                <div class="content-section">
+                    <div class="section-title">Visual Analytics</div>
+                    <div class="chart-row">
+                        <div class="chart-container">
+                            <div class="chart-title">Trend Kunjungan per Bulan</div>
+                            <div class="chart-area">
+                                Line Chart<br>
+                                202501 - 202508
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-title">Komposisi Wisatawan</div>
+                            <div class="chart-area">
+                                Pie Chart<br>
+                                Nusantara: 97.3%<br>
+                                Mancanegara: 2.7%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Top 10 & Map -->
+                <div class="content-section">
+                    <div class="section-title">Top 10 & Sebaran</div>
+                    <div class="dual-charts">
+                        <div class="chart-container">
+                            <div class="chart-title">Top 10 Objek Wisata</div>
+                            <div class="chart-area">
+                                Bar Chart Horizontal<br>
+                                1. Taman Ragunan<br>
+                                2. Old Shanghai<br>
+                                3. Pos Bloc
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-title">Sebaran Objek Wisata</div>
+                            <div class="chart-area">
+                                Regional Bar Chart<br>
+                                Jakarta Barat ███████<br>
+                                Jakarta Pusat █████<br>
+                                Jakarta Selatan ████
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Price Analysis -->
+                <div class="content-section">
+                    <div class="section-title">Analisis Harga Tiket</div>
+                    <div class="kpi-grid">
+                        <div class="kpi-box">
+                            <div class="kpi-value">10</div>
+                            <div class="kpi-label">Objek Gratis</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">18</div>
+                            <div class="kpi-label">Objek Berbayar</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">Rp 8,222</div>
+                            <div class="kpi-label">Rata-rata Harga</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">Rp 25,000</div>
+                            <div class="kpi-label">Harga Tertinggi</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Charts -->
+                    <div class="chart-row">
+                        <div class="chart-container">
+                            <div class="chart-title">Distribusi Harga</div>
+                            <div class="chart-area">
+                                Bar Chart Categories<br>
+                                < Rp 5K | Rp 5K-10K | > Rp 10K
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-title">Top 10 Termahal</div>
+                            <div class="chart-area">
+                                Horizontal Bar Chart<br>
+                                Ancol: Rp 25,000<br>
+                                Monas: Rp 15,000
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Performance Trend -->
+                <div class="content-section">
+                    <div class="section-title">UI/UX Performance Trend</div>
+                    <div class="dual-charts">
+                        <div class="chart-container">
+                            <div class="chart-title">Load Time Trend</div>
+                            <div class="chart-area">
+                                Line Chart<br>
+                                Avg: 0.0097s
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-title">Error Rate Trend</div>
+                            <div class="chart-area">
+                                Line Chart<br>
+                                Avg: 0.00%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Performance Summary -->
+                    <div class="kpi-grid">
+                        <div class="kpi-box">
+                            <div class="kpi-value">0.0097s</div>
+                            <div class="kpi-label">Avg Load Time</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">0.00%</div>
+                            <div class="kpi-label">Avg Error Rate</div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-value">32</div>
+                            <div class="kpi-label">Total Sessions</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Data Table -->
+                <div class="content-section">
+                    <div class="section-title">Detail Data Kunjungan</div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Periode</th>
+                                    <th>Nama Objek</th>
+                                    <th>Wilayah</th>
+                                    <th>Jenis Wisatawan</th>
+                                    <th>Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>202501</td>
+                                    <td>Taman Impian Jaya Ancol</td>
+                                    <td>Jakarta Utara</td>
+                                    <td>Nusantara</td>
+                                    <td>760,497</td>
+                                </tr>
+                                <tr>
+                                    <td>202501</td>
+                                    <td>Taman Marga Satwa Ragunan</td>
+                                    <td>Jakarta Selatan</td>
+                                    <td>Nusantara</td>
+                                    <td>563,393</td>
+                                </tr>
+                                <tr>
+                                    <td>202501</td>
+                                    <td>Monumen Nasional</td>
+                                    <td>Jakarta Pusat</td>
+                                    <td>Mancanegara</td>
+                                    <td>360,209</td>
+                                </tr>
+                                <tr>
+                                    <td>202501</td>
+                                    <td>Taman Mini Indonesia Indah</td>
+                                    <td>Jakarta Timur</td>
+                                    <td>Nusantara</td>
+                                    <td>351,588</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Download Button -->
+                    <div class="button-row">
+                        <div class="action-button">📥 Download Data sebagai CSV</div>
+                        <div class="action-button">📥 Download Data Harga Tiket</div>
+                    </div>
+                </div>
+                
+                <!-- Activity Log -->
+                <div class="content-section">
+                    <div class="section-title">Log Aktivitas User</div>
+                    <div class="activity-log">
+                        <div class="log-title">Current Session Activity</div>
+                        
+                        <div class="log-entry">
+                            <div class="log-time">16:34:10</div>
+                            <div>filter_change | Year: Semua → 2025</div>
+                        </div>
+                        
+                        <div class="log-entry">
+                            <div class="log-time">16:34:15</div>
+                            <div>chart_interaction | Viewed Trend Chart</div>
+                        </div>
+                        
+                        <div class="log-entry">
+                            <div class="log-time">16:34:20</div>
+                            <div>filter_change | Wilayah: Added Jakarta Timur</div>
+                        </div>
+                        
+                        <div class="log-entry">
+                            <div class="log-time">16:34:25</div>
+                            <div>download | Exported CSV data</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Footer -->
+                <div class="dashboard-footer">
+                    <div class="footer-title">Dashboard Pariwisata DKI Jakarta 2025</div>
+                    <div class="footer-info">
+                        Session: ab5201f3... | Status: Excellent<br>
+                        Data Source: PostgreSQL DW | Real-Time Tracking: ✓ Enabled<br>
+                        UI/UX Score: 8.5/10 | Tech Stack: Python + Streamlit + Plotly + PostgreSQL
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Download Panel -->
+    <div class="download-panel">
+        <div class="download-title">Download Wireframe Dashboard</div>
+        <p style="margin-bottom: 15px; color: #666; font-size: 14px;">
+            Layout terstruktur dengan proporsi yang baik. Semua komponen termasuk log aktivitas user.
+        </p>
+        
+        <button class="download-button" onclick="downloadDashboard()">
+            📷 Download sebagai Gambar
+        </button>
+        
+        <div class="download-note">
+            Ukuran: 1000×1300px | Format: PNG High Quality | Dapat digunakan untuk dokumentasi dan presentasi
+        </div>
+    </div>
+
+    <script>
+        function downloadDashboard() {
+            const button = event.target;
+            const originalText = button.innerHTML;
+            button.innerHTML = '⏳ Generating...';
+            button.disabled = true;
+            
+            // Show loading
+            const loading = document.createElement('div');
+            loading.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0,0,0,0.85);
+                color: white;
+                padding: 20px 30px;
+                border-radius: 10px;
+                z-index: 10000;
+                font-size: 16px;
+                text-align: center;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            `;
+            loading.innerHTML = `
+                <div style="margin-bottom: 10px; font-size: 24px;">🔄</div>
+                <div>Generating high-quality image...</div>
+                <div style="font-size: 12px; margin-top: 5px;">Please wait a moment</div>
+            `;
+            document.body.appendChild(loading);
+            
+            // Konfigurasi untuk gambar berkualitas tinggi
+            html2canvas(document.getElementById('dashboard-wireframe'), {
+                scale: 2.5, // Scale tinggi untuk kualitas baik
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false,
+                allowTaint: true,
+                removeContainer: true,
+                width: document.getElementById('dashboard-wireframe').offsetWidth,
+                height: document.getElementById('dashboard-wireframe').scrollHeight,
+                windowWidth: document.getElementById('dashboard-wireframe').scrollWidth,
+                windowHeight: document.getElementById('dashboard-wireframe').scrollHeight
+            }).then(canvas => {
+                // Remove loading
+                loading.remove();
+                
+                // Buat canvas akhir dengan ukuran optimal
+                const finalCanvas = document.createElement('canvas');
+                finalCanvas.width = 2500; // 2.5x dari 1000px
+                finalCanvas.height = canvas.height * (2500 / canvas.width);
+                
+                const ctx = finalCanvas.getContext('2d');
+                
+                // High quality rendering
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                
+                // Draw dengan kualitas tinggi
+                ctx.drawImage(
+                    canvas, 
+                    0, 0, canvas.width, canvas.height,
+                    0, 0, finalCanvas.width, finalCanvas.height
+                );
+                
+                // Convert ke blob untuk kualitas terbaik
+                finalCanvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    
+                    // Create download link
+                    const link = document.createElement('a');
+                    link.href = url;
+                    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                    link.download = `wireframe-dashboard-${timestamp}.png`;
+                    
+                    // Trigger download
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Cleanup
+                    URL.revokeObjectURL(url);
+                    
+                    // Reset button
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    
+                    // Success message
+                    setTimeout(() => {
+                        alert(`✅ Dashboard wireframe berhasil diunduh!\n\n• Ukuran: ${finalCanvas.width}×${finalCanvas.height}px\n• Kualitas: High\n• Format: PNG\n\nFile dapat digunakan untuk presentasi dan dokumentasi.`);
+                    }, 300);
+                    
+                }, 'image/png', 1.0); // Quality 1.0 = maximum
+                
+            }).catch(error => {
+                console.error('Error generating image:', error);
+                loading.remove();
+                
+                button.innerHTML = originalText;
+                button.disabled = false;
+                
+                alert('❌ Terjadi kesalahan saat mengenerate gambar. Silakan coba lagi atau refresh halaman.');
+            });
+        }
+        
+        // Tambahkan interaksi sederhana
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter boxes interaction
+            const filterBoxes = document.querySelectorAll('.filter-box');
+            filterBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    this.style.borderColor = '#333';
+                    this.style.boxShadow = '0 0 8px rgba(0,0,0,0.2)';
+                    setTimeout(() => {
+                        this.style.borderColor = '#777';
+                        this.style.boxShadow = 'none';
+                    }, 300);
+                });
+            });
+            
+            // KPI boxes interaction
+            const kpiBoxes = document.querySelectorAll('.kpi-box');
+            kpiBoxes.forEach(box => {
+                box.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+                
+                box.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+            
+            console.log('Wireframe Dashboard ready!');
+            console.log('Layout: 1000px width, structured design');
+            console.log('Features: All components including activity log');
+        });
+    </script>
+</body>
+</html>

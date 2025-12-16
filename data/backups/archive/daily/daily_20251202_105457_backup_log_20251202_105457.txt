@@ -1,0 +1,188 @@
+[2025-12-02 10:54:57] ==========================================
+[2025-12-02 10:54:57] STARTING DATABASE BACKUP (manual)
+[2025-12-02 10:54:57] ==========================================
+[2025-12-02 10:54:57] Database: dw_pariwisata_jakarta@localhost:5432
+[2025-12-02 10:54:57] Backup Directory: /c/File Perkuliahan/SEMESTER 7/File Matkul Semester 7/Kecerdasan Bisnis (BI)/File Tugas/UAS/UAS_DW_Pariwisata_Jakarta/data/backups/backups
+[2025-12-02 10:54:57] DEBUG: DB_USER=postgres, DB_PASSWORD length=10
+[2025-12-02 10:54:57] DEBUG: PATH=/mingw64/bin:/usr/bin:/c/Users/User/bin:/c/Program Files (x86)/Common Files/Oracle/Java/java8path:/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/c/Windows/System32/OpenSSH:/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/c/xampp/php:/c/composer:/cmd:/c/Program Files/GitHub CLI:/c/Program Files/heroku:/c/Program Files/nodejs:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0:/c/WINDOWS/System32/OpenSSH:/c/Program Files/Docker/Docker/resources/bin:/c/Users/User/AppData/Local/Programs/Python/Python312/Scripts:/c/Users/User/AppData/Local/Programs/Python/Python312:/c/Users/User/AppData/Local/Programs/Python/Launcher:/c/Users/User/AppData/Local/Microsoft/WindowsApps:/c/Users/User/AppData/Roaming/Composer/vendor/bin:/c/Users/User/AppData/Local/GitHubDesktop/bin:/c/flutter/bin:/c/Users/User/AppData/Local/Programs/Microsoft VS Code/bin:/c/Program Files/heroku/bin:/c/Users/User/AppData/Roaming/npm:/c/Program Files/PostgreSQL/18/bin
+[2025-12-02 10:54:58] Checking database connection...
+[2025-12-02 10:54:58] ✅ Database connection successful
+[2025-12-02 10:54:58] 
+[2025-12-02 10:54:58] [1/3] Creating FULL backup (schema + data)...
+pg_dump: executing SELECT pg_catalog.set_config('search_path', '', false);
+pg_dump: last built-in OID is 16383
+pg_dump: reading extensions
+pg_dump: identifying extension members
+pg_dump: reading schemas
+pg_dump: reading user-defined tables
+pg_dump: reading user-defined functions
+pg_dump: reading user-defined types
+pg_dump: reading procedural languages
+pg_dump: reading user-defined aggregate functions
+pg_dump: reading user-defined operators
+pg_dump: reading user-defined access methods
+pg_dump: reading user-defined operator classes
+pg_dump: reading user-defined operator families
+pg_dump: reading user-defined text search parsers
+pg_dump: reading user-defined text search templates
+pg_dump: reading user-defined text search dictionaries
+pg_dump: reading user-defined text search configurations
+pg_dump: reading user-defined foreign-data wrappers
+pg_dump: reading user-defined foreign servers
+pg_dump: reading default privileges
+pg_dump: reading user-defined collations
+pg_dump: reading user-defined conversions
+pg_dump: reading type casts
+pg_dump: reading transforms
+pg_dump: reading table inheritance information
+pg_dump: reading event triggers
+pg_dump: finding extension tables
+pg_dump: finding inheritance relationships
+pg_dump: reading column info for interesting tables
+pg_dump: finding table default expressions
+pg_dump: flagging inherited columns in subtables
+pg_dump: reading partitioning data
+pg_dump: reading indexes
+pg_dump: flagging indexes in partitioned tables
+pg_dump: reading extended statistics
+pg_dump: reading constraints
+pg_dump: reading triggers
+pg_dump: reading rewrite rules
+pg_dump: reading policies
+pg_dump: reading row-level security policies
+pg_dump: reading publications
+pg_dump: reading publication membership of tables
+pg_dump: reading publication membership of schemas
+pg_dump: reading subscriptions
+pg_dump: reading subscription membership of tables
+pg_dump: reading large objects
+pg_dump: reading dependency data
+pg_dump: saving encoding = UTF8
+pg_dump: saving "standard_conforming_strings = on"
+pg_dump: saving "search_path = "
+pg_dump: creating TABLE "public.dashboard_performance_log"
+pg_dump: creating SEQUENCE "public.dashboard_performance_log_log_id_seq"
+pg_dump: creating SEQUENCE OWNED BY "public.dashboard_performance_log_log_id_seq"
+pg_dump: creating TABLE "public.dim_objek_wisata"
+pg_dump: creating SEQUENCE "public.dim_objek_wisata_objek_wisata_id_seq"
+pg_dump: creating SEQUENCE OWNED BY "public.dim_objek_wisata_objek_wisata_id_seq"
+pg_dump: creating TABLE "public.dim_price"
+pg_dump: creating COMMENT "public.TABLE dim_price"
+pg_dump: creating COMMENT "public.COLUMN dim_price.harga_tiket_dewasa"
+pg_dump: creating COMMENT "public.COLUMN dim_price.harga_tiket_anak"
+pg_dump: creating COMMENT "public.COLUMN dim_price.sumber_platform"
+pg_dump: creating SEQUENCE "public.dim_price_price_id_seq"
+pg_dump: creating SEQUENCE OWNED BY "public.dim_price_price_id_seq"
+pg_dump: creating TABLE "public.dim_time"
+pg_dump: creating SEQUENCE "public.dim_time_time_id_seq"
+pg_dump: creating SEQUENCE OWNED BY "public.dim_time_time_id_seq"
+pg_dump: creating TABLE "public.dim_wisatawan"
+pg_dump: creating SEQUENCE "public.dim_wisatawan_wisatawan_id_seq"
+pg_dump: creating SEQUENCE OWNED BY "public.dim_wisatawan_wisatawan_id_seq"
+pg_dump: creating TABLE "public.fact_kunjungan"
+pg_dump: creating SEQUENCE "public.fact_kunjungan_kunjungan_id_seq"
+pg_dump: creating SEQUENCE OWNED BY "public.fact_kunjungan_kunjungan_id_seq"
+pg_dump: creating TABLE "public.staging_harga_tiket_raw"
+pg_dump: creating SEQUENCE "public.staging_harga_tiket_raw_id_seq"
+pg_dump: creating SEQUENCE OWNED BY "public.staging_harga_tiket_raw_id_seq"
+pg_dump: creating TABLE "public.staging_kunjungan_raw"
+pg_dump: creating SEQUENCE "public.staging_kunjungan_raw_id_seq"
+pg_dump: creating SEQUENCE OWNED BY "public.staging_kunjungan_raw_id_seq"
+pg_dump: creating TABLE "public.user_journey_log"
+pg_dump: creating SEQUENCE "public.user_journey_log_journey_id_seq"
+pg_dump: creating SEQUENCE OWNED BY "public.user_journey_log_journey_id_seq"
+pg_dump: creating VIEW "public.v_dashboard_performance_daily"
+pg_dump: creating VIEW "public.v_funnel_analysis"
+pg_dump: creating VIEW "public.v_kunjungan_summary"
+pg_dump: creating DEFAULT "public.dashboard_performance_log log_id"
+pg_dump: creating DEFAULT "public.dim_objek_wisata objek_wisata_id"
+pg_dump: creating DEFAULT "public.dim_price price_id"
+pg_dump: creating DEFAULT "public.dim_time time_id"
+pg_dump: creating DEFAULT "public.dim_wisatawan wisatawan_id"
+pg_dump: creating DEFAULT "public.fact_kunjungan kunjungan_id"
+pg_dump: creating DEFAULT "public.staging_harga_tiket_raw id"
+pg_dump: creating DEFAULT "public.staging_kunjungan_raw id"
+pg_dump: creating DEFAULT "public.user_journey_log journey_id"
+pg_dump: processing data for table "public.dashboard_performance_log"
+pg_dump: dumping contents of table "public.dashboard_performance_log"
+pg_dump: processing data for table "public.dim_objek_wisata"
+pg_dump: dumping contents of table "public.dim_objek_wisata"
+pg_dump: processing data for table "public.dim_price"
+pg_dump: dumping contents of table "public.dim_price"
+pg_dump: processing data for table "public.dim_time"
+pg_dump: dumping contents of table "public.dim_time"
+pg_dump: processing data for table "public.dim_wisatawan"
+pg_dump: dumping contents of table "public.dim_wisatawan"
+pg_dump: processing data for table "public.fact_kunjungan"
+pg_dump: dumping contents of table "public.fact_kunjungan"
+pg_dump: processing data for table "public.staging_harga_tiket_raw"
+pg_dump: dumping contents of table "public.staging_harga_tiket_raw"
+pg_dump: processing data for table "public.staging_kunjungan_raw"
+pg_dump: dumping contents of table "public.staging_kunjungan_raw"
+pg_dump: processing data for table "public.user_journey_log"
+pg_dump: dumping contents of table "public.user_journey_log"
+pg_dump: executing SEQUENCE SET dashboard_performance_log_log_id_seq
+pg_dump: executing SEQUENCE SET dim_objek_wisata_objek_wisata_id_seq
+pg_dump: executing SEQUENCE SET dim_price_price_id_seq
+pg_dump: executing SEQUENCE SET dim_time_time_id_seq
+pg_dump: executing SEQUENCE SET dim_wisatawan_wisatawan_id_seq
+pg_dump: executing SEQUENCE SET fact_kunjungan_kunjungan_id_seq
+pg_dump: executing SEQUENCE SET staging_harga_tiket_raw_id_seq
+pg_dump: executing SEQUENCE SET staging_kunjungan_raw_id_seq
+pg_dump: executing SEQUENCE SET user_journey_log_journey_id_seq
+pg_dump: creating CONSTRAINT "public.dashboard_performance_log dashboard_performance_log_pkey"
+pg_dump: creating CONSTRAINT "public.dim_objek_wisata dim_objek_wisata_pkey"
+pg_dump: creating CONSTRAINT "public.dim_price dim_price_pkey"
+pg_dump: creating CONSTRAINT "public.dim_time dim_time_periode_data_key"
+pg_dump: creating CONSTRAINT "public.dim_time dim_time_pkey"
+pg_dump: creating CONSTRAINT "public.dim_wisatawan dim_wisatawan_pkey"
+pg_dump: creating CONSTRAINT "public.fact_kunjungan fact_kunjungan_pkey"
+pg_dump: creating CONSTRAINT "public.fact_kunjungan fact_kunjungan_time_id_objek_wisata_id_wisatawan_id_key"
+pg_dump: creating CONSTRAINT "public.staging_harga_tiket_raw staging_harga_tiket_raw_pkey"
+pg_dump: creating CONSTRAINT "public.staging_kunjungan_raw staging_kunjungan_raw_pkey"
+pg_dump: creating CONSTRAINT "public.dim_price unique_objek_price"
+pg_dump: creating CONSTRAINT "public.user_journey_log user_journey_log_pkey"
+pg_dump: creating INDEX "public.idx_dim_objek_nama"
+pg_dump: creating INDEX "public.idx_dim_time_periode"
+pg_dump: creating INDEX "public.idx_fact_objek"
+pg_dump: creating INDEX "public.idx_fact_price"
+pg_dump: creating INDEX "public.idx_fact_time"
+pg_dump: creating INDEX "public.idx_fact_wisatawan"
+pg_dump: creating INDEX "public.idx_journey_session"
+pg_dump: creating INDEX "public.idx_journey_stage"
+pg_dump: creating INDEX "public.idx_journey_timestamp"
+pg_dump: creating INDEX "public.idx_perf_session"
+pg_dump: creating INDEX "public.idx_perf_status"
+pg_dump: creating INDEX "public.idx_perf_timestamp"
+pg_dump: creating INDEX "public.idx_price_objek"
+pg_dump: creating FK CONSTRAINT "public.fact_kunjungan fact_kunjungan_objek_wisata_id_fkey"
+pg_dump: creating FK CONSTRAINT "public.fact_kunjungan fact_kunjungan_time_id_fkey"
+pg_dump: creating FK CONSTRAINT "public.fact_kunjungan fact_kunjungan_wisatawan_id_fkey"
+pg_dump: creating FK CONSTRAINT "public.dim_price fk_objek_wisata"
+[2025-12-02 10:54:59] ✅ Full backup created: /c/File Perkuliahan/SEMESTER 7/File Matkul Semester 7/Kecerdasan Bisnis (BI)/File Tugas/UAS/UAS_DW_Pariwisata_Jakarta/data/backups/backups/full_backup_20251202_105457.sql (220K)
+[2025-12-02 10:54:59] 
+[2025-12-02 10:54:59] [2/3] Creating SCHEMA-ONLY backup...
+[2025-12-02 10:55:00] ✅ Schema backup created: /c/File Perkuliahan/SEMESTER 7/File Matkul Semester 7/Kecerdasan Bisnis (BI)/File Tugas/UAS/UAS_DW_Pariwisata_Jakarta/data/backups/backups/schema_only_20251202_105457.sql (20K)
+[2025-12-02 10:55:00] 
+[2025-12-02 10:55:00] [3/3] Creating DATA-ONLY backup (critical tables)...
+[2025-12-02 10:55:01] ✅ Data backup created: /c/File Perkuliahan/SEMESTER 7/File Matkul Semester 7/Kecerdasan Bisnis (BI)/File Tugas/UAS/UAS_DW_Pariwisata_Jakarta/data/backups/backups/data_only_20251202_105457.sql (196K)
+[2025-12-02 10:55:01] 
+[2025-12-02 10:55:01] [4/4] Compressing backups...
+[2025-12-02 10:55:01] ✅ Compressed: /c/File Perkuliahan/SEMESTER 7/File Matkul Semester 7/Kecerdasan Bisnis (BI)/File Tugas/UAS/UAS_DW_Pariwisata_Jakarta/data/backups/backups/full_backup_20251202_105457.sql.gz
+[2025-12-02 10:55:01] ✅ Compressed: /c/File Perkuliahan/SEMESTER 7/File Matkul Semester 7/Kecerdasan Bisnis (BI)/File Tugas/UAS/UAS_DW_Pariwisata_Jakarta/data/backups/backups/schema_only_20251202_105457.sql.gz
+[2025-12-02 10:55:01] ✅ Compressed: /c/File Perkuliahan/SEMESTER 7/File Matkul Semester 7/Kecerdasan Bisnis (BI)/File Tugas/UAS/UAS_DW_Pariwisata_Jakarta/data/backups/backups/data_only_20251202_105457.sql.gz
+[2025-12-02 10:55:01] 
+[2025-12-02 10:55:02] [5/5] Applying retention policy (30 days)...
+[2025-12-02 10:55:02] Deleted 0 old backup(s)
+[2025-12-02 10:55:02] 
+[2025-12-02 10:55:02] ==========================================
+[2025-12-02 10:55:02] BACKUP COMPLETED SUCCESSFULLY
+[2025-12-02 10:55:02] ==========================================
+[2025-12-02 10:55:02] Summary:
+[2025-12-02 10:55:02]   - Full backup:   
+[2025-12-02 10:55:03]   - Schema backup: 
+[2025-12-02 10:55:03]   - Data backup:   
+[2025-12-02 10:55:03]   - Log file:      /c/File Perkuliahan/SEMESTER 7/File Matkul Semester 7/Kecerdasan Bisnis (BI)/File Tugas/UAS/UAS_DW_Pariwisata_Jakarta/data/backups/backups/backup_log_20251202_105457.txt
+[2025-12-02 10:55:03] 
+[2025-12-02 10:55:03] Total backups in directory: 0
+[2025-12-02 10:55:03] ==========================================

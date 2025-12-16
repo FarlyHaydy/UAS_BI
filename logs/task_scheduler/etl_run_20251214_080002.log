@@ -1,0 +1,13 @@
+======================================================================== 
+ETL Task Scheduler - Started: 14/12/2025  8:00:02,11 
+Using short path: C:\FILEPE~1\SECDE9~1\FILEMA~1\KECERD~1\FILETU~1\UAS\UAS_DW~1 
+Docker Compose: C:\FILEPE~1\SECDE9~1\FILEMA~1\KECERD~1\FILETU~1\UAS\UAS_DW~1\docker\docker-compose.yml 
+======================================================================== 
+ 
+[1/3] Checking Docker... 
+Docker version 28.4.0, build d8eb465
+[2/3] Checking containers... 
+error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.51/containers/json?filters=%7B%22label%22%3A%7B%22com.docker.compose.config-hash%22%3Atrue%2C%22com.docker.compose.oneoff%3DFalse%22%3Atrue%2C%22com.docker.compose.project%3Ddocker%22%3Atrue%7D%7D": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+Starting containers... 
+unable to get image 'docker-etl': error during connect: Get "http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.51/images/docker-etl/json": open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.
+ERROR: Failed to start containers 

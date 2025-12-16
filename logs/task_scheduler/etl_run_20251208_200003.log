@@ -1,0 +1,171 @@
+======================================================================== 
+ETL Task Scheduler - Started: 08/12/2025 20:00:03,04 
+Using short path: C:\FILEPE~1\SECDE9~1\FILEMA~1\KECERD~1\FILETU~1\UAS\UAS_DW~1 
+Docker Compose: C:\FILEPE~1\SECDE9~1\FILEMA~1\KECERD~1\FILETU~1\UAS\UAS_DW~1\docker\docker-compose.yml 
+======================================================================== 
+ 
+[1/3] Checking Docker... 
+Docker version 28.4.0, build d8eb465
+[2/3] Checking containers... 
+NAME           IMAGE                   COMMAND                  SERVICE     CREATED             STATUS                       PORTS
+dw_dashboard   docker-dashboard        "streamlit run /app/…"   dashboard   About an hour ago   Up About an hour (healthy)   0.0.0.0:8501->8501/tcp, [::]:8501->8501/tcp
+dw_etl         docker-etl              "tail -f /dev/null"      etl         About an hour ago   Up 53 minutes (healthy)      
+dw_pgadmin     dpage/pgadmin4:latest   "/entrypoint.sh"         pgadmin     About an hour ago   Up About an hour             0.0.0.0:5050->80/tcp, [::]:5050->80/tcp
+dw_postgres    postgres:18-alpine      "docker-entrypoint.s…"   postgres    About an hour ago   Up About an hour (healthy)   0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+[3/3] Running ETL... 
+---------------------------------------- 
+
+================================================================================
+[2025-12-08 12:00:05.334396] ETL Started
+Working Directory: /app
+Script Path: /app/scripts/etl/main_etl.py
+================================================================================
+
+
+╔==============================================================================╗
+║               ETL PROCESS - DW PARIWISATA JAKARTA 2025                       ║
+║                    with Disaster Recovery Features                           ║
+╚==============================================================================╝
+
+Started at: 2025-12-08 12:00:05 WITA
+2025-12-08 12:00:05,343 - utils - INFO - [2025-12-08 12:00:05] ETL - START: Starting full ETL process (Traditional - Transform from staging)
+
+================================================================================
+PRE-ETL BACKUP
+================================================================================
+📂 Looking for backup script at: /app/data/backups/backup_script.sh
+2025-12-08 12:00:05,347 - utils - INFO - [2025-12-08 12:00:05] BACKUP - START: Running pre-ETL database backup
+🔐 Database: dw_pariwisata_jakarta@postgres:5432
+🔄 Executing backup script...
+2025-12-08 12:00:05,713 - utils - INFO - [2025-12-08 12:00:05] BACKUP - WARNING: Backup warning: /app/data/backups/../../.env: line 10: $'\r': command not found
+/app/data/backups/../../.env: line 16: $'\r': command not found
+/app/data/backups/../../.env: line 22: $'\r': command not found
+/app/dat
+⚠️  Backup warning (ETL will continue):
+⚠️  No backup created - proceeding with caution
+
+================================================================================
+STEP 1: EXTRACT DATA FROM SOURCES
+================================================================================
+2025-12-08 12:00:05,788 - utils - INFO - [2025-12-08 12:00:05] EXTRACT - START: Reading kunjungan data from Excel
+2025-12-08 12:00:06,085 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - INFO: Read 400 rows from Excel
+2025-12-08 12:00:06,096 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - SUCCESS: Extracted 400 records
+✓ Extracted 400 kunjungan records (RAW data)
+2025-12-08 12:00:06,097 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - START: Reading harga tiket data
+2025-12-08 12:00:06,294 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - INFO: Read 28 harga records from Excel
+2025-12-08 12:00:06,302 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - INFO: Harga data breakdown:
+2025-12-08 12:00:06,304 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - INFO:   - Objek wisata gratis: 10
+2025-12-08 12:00:06,312 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - INFO:   - Objek wisata berbayar: 18
+2025-12-08 12:00:06,320 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - INFO:   - Harga tiket dewasa range: Rp 2,000 - Rp 25,000
+2025-12-08 12:00:06,321 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - INFO:   - Harga tiket dewasa rata-rata: Rp 8,222
+✓ Extracted 28 harga records (RAW data)
+
+================================================================================
+STEP 2: LOAD RAW DATA TO STAGING
+================================================================================
+💡 Staging will be used for transformation (Traditional ETL)
+2025-12-08 12:00:06,323 - utils - INFO - [2025-12-08 12:00:06] EXTRACT - SUCCESS: Extracted 28 harga records
+2025-12-08 12:00:06,327 - utils - INFO - [2025-12-08 12:00:06] LOAD - START: Loading to staging_kunjungan_raw
+✓ Loaded 400 RAW records to staging_kunjungan_raw
+2025-12-08 12:00:06,467 - utils - INFO - [2025-12-08 12:00:06] LOAD - SUCCESS: Loaded 400 records to staging_kunjungan_raw
+2025-12-08 12:00:06,468 - utils - INFO - [2025-12-08 12:00:06] LOAD - START: Loading to staging_harga_tiket_raw
+2025-12-08 12:00:06,476 - utils - INFO - [2025-12-08 12:00:06] LOAD - SUCCESS: Loaded 28 records to staging_harga_tiket_raw
+✓ Loaded 28 RAW harga records to staging_harga_tiket_raw
+
+================================================================================
+STEP 3: BUILD DIMENSIONS FROM STAGING DATABASE
+================================================================================
+💡 Reading data FROM staging tables using SQL queries
+2025-12-08 12:00:06,477 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - START: Building dim_time FROM staging
+2025-12-08 12:00:06,501 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - SUCCESS: Built 8 time records FROM staging
+2025-12-08 12:00:06,501 - utils - INFO - [2025-12-08 12:00:06] LOAD - START: Loading to dim_time
+2025-12-08 12:00:06,509 - utils - INFO - [2025-12-08 12:00:06] LOAD - SUCCESS: Inserted 0 new time records
+✓ Loaded dim_time (8 records) FROM staging
+2025-12-08 12:00:06,510 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - START: Building dim_objek_wisata FROM staging
+2025-12-08 12:00:06,518 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - SUCCESS: Built 29 objek wisata FROM staging
+2025-12-08 12:00:06,521 - utils - INFO - [2025-12-08 12:00:06] LOAD - START: Loading to dim_objek_wisata
+✓ Loaded dim_objek_wisata (29 records) FROM staging
+✓ dim_wisatawan already exists (2 records: Nusantara, Mancanegara)
+2025-12-08 12:00:06,540 - utils - INFO - [2025-12-08 12:00:06] LOAD - SUCCESS: Inserted 0 new objek wisata records
+2025-12-08 12:00:06,541 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - START: Transforming harga data
+2025-12-08 12:00:06,544 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - INFO: Found 29 objek wisata in database
+2025-12-08 12:00:06,553 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - INFO: Harga data statistics:
+2025-12-08 12:00:06,553 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - INFO:   - Total: 28, Gratis: 10, Berbayar: 18
+2025-12-08 12:00:06,555 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - INFO:   - Average price: Rp 8,222
+2025-12-08 12:00:06,555 - utils - INFO - [2025-12-08 12:00:06] TRANSFORM - SUCCESS: Transformed 28 harga records
+2025-12-08 12:00:06,555 - utils - INFO - [2025-12-08 12:00:06] LOAD - START: Loading to dim_price
+2025-12-08 12:00:06,556 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: Truncating dim_price table
+2025-12-08 12:00:06,601 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: Inserted: 28, Updated: 0
+2025-12-08 12:00:06,602 - utils - INFO - [2025-12-08 12:00:06] LOAD - SUCCESS: Loaded 28 price records to dim_price
+2025-12-08 12:00:06,604 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: Total records in dim_price: 28
+✓ Loaded dim_price (28 records)
+
+================================================================================
+STEP 4: LOAD FACT TABLE FROM STAGING
+================================================================================
+💡 Using SQL JOIN to merge staging with dimensions
+2025-12-08 12:00:06,605 - utils - INFO - [2025-12-08 12:00:06] LOAD - START: Loading to fact_kunjungan
+2025-12-08 12:00:06,608 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: Staging stats: 400 total, 8 periodes, 29 objek, 2 wisatawan
+2025-12-08 12:00:06,609 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: dim_time: 8 records
+2025-12-08 12:00:06,610 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: dim_objek_wisata: 29 records
+2025-12-08 12:00:06,611 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: dim_wisatawan: 2 records
+2025-12-08 12:00:06,628 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: Inserted/Updated 400 fact records
+2025-12-08 12:00:06,638 - utils - INFO - [2025-12-08 12:00:06] LOAD - SUCCESS: Loaded 400 fact records
+2025-12-08 12:00:06,638 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: Staging records marked as processed
+2025-12-08 12:00:06,640 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: Total fact_kunjungan records: 400
+✓ Loaded fact_kunjungan (400 records) FROM staging
+  ✓ SQL JOIN with dim_time, dim_objek_wisata, dim_wisatawan
+  ✓ Foreign key lookups completed via database
+  ✓ Staging records marked as processed
+
+================================================================================
+STEP 5: DATA QUALITY VERIFICATION
+================================================================================
+2025-12-08 12:00:06,641 - utils - INFO - [2025-12-08 12:00:06] LOAD - START: Verifying data quality
+2025-12-08 12:00:06,645 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO: Data quality verification:
+2025-12-08 12:00:06,646 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO:   - dim_time: 8 records
+2025-12-08 12:00:06,646 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO:   - dim_objek_wisata: 29 records
+2025-12-08 12:00:06,647 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO:   - dim_wisatawan: 2 records
+2025-12-08 12:00:06,647 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO:   - dim_price: 28 records
+2025-12-08 12:00:06,647 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO:   - fact_kunjungan: 400 records
+2025-12-08 12:00:06,648 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO:   - staging_total: 2800 records
+2025-12-08 12:00:06,648 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO:   - staging_processed: 2800 records
+2025-12-08 12:00:06,648 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO:   - staging_unprocessed: 0 records
+2025-12-08 12:00:06,648 - utils - INFO - [2025-12-08 12:00:06] LOAD - INFO:   - orphan_facts: 0 records
+2025-12-08 12:00:06,649 - utils - INFO - [2025-12-08 12:00:06] LOAD - SUCCESS: No orphan records found
+
+Data Warehouse Summary:
+--------------------------------------------------------------------------------
+  dim_time                      :          8 records
+  dim_objek_wisata              :         29 records
+  dim_wisatawan                 :          2 records
+  dim_price                     :         28 records
+  fact_kunjungan                :        400 records
+  staging_total                 :      2,800 records
+  staging_processed             :      2,800 records
+  staging_unprocessed           :          0 records
+--------------------------------------------------------------------------------
+
+✅ Data quality check passed - No orphan records
+
+================================================================================
+STEP 6: STAGING CLEANUP
+================================================================================
+✓ Staging data retained for audit trail
+  → All records marked as is_processed = TRUE
+
+================================================================================
+ETL PROCESS COMPLETED SUCCESSFULLY! ✅
+Total execution time: 0m 1s
+================================================================================
+
+🎉 ETL completed successfully
+
+Exit code: 0
+2025-12-08 12:00:06,649 - utils - INFO - [2025-12-08 12:00:06] ETL - SUCCESS: ETL process completed in 0m 1s
+---------------------------------------- 
+SUCCESS: ETL completed 
+python: can't open file '/app/scripts/disaster_recovery/send_notification.py': [Errno 2] No such file or directory
+======================================================================== 
+Finished: 08/12/2025 20:00:07,10 
+======================================================================== 

@@ -1,0 +1,65 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.pyc
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# OS
+Thumbs.db
+*.bak
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Backups (terlalu besar untuk build context)
+data/backups/backups/*.sql.gz
+data/backups/backups/*.sql
+
+# Temporary files
+*.tmp
+tmp/
+temp/
+
+# Test files
+test/
+tests/
+*.test.py
+
+# Documentation (optional, bisa di-include kalau perlu)
+docs/
+*.md
+!README.md
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Jupyter notebooks
+*.ipynb
+.ipynb_checkpoints/

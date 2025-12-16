@@ -1,0 +1,12 @@
+# Core Data Processing - Versi kompatibel Python 3.12
+pandas>=2.1.0
+numpy>=1.26.0
+openpyxl>=3.1.0
+
+# Database - PostgreSQL 
+psycopg2-binary>=2.9.9
+sqlalchemy>=2.0.0
+
+# Configuration
+python-dotenv>=1.0.0
+

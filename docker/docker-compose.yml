@@ -1,0 +1,117 @@
+
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:18-alpine
+    container_name: dw_postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      TZ: Asia/Makassar
+    ports:
+      - "5433:5432"  # ← FIX: host_port:container_port
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - ../data/backups:/backups
+    networks:
+      - dw_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres || exit 1"]  # ← FIX: Hardcode 'postgres' user
+      interval: 10s
+      timeout: 10s  # ← Lebih toleran
+      retries: 10   # ← Lebih banyak retry
+      start_period: 30s  # ← Kasih waktu init
+    restart: unless-stopped
+
+  # pgAdmin untuk Database Management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: dw_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+      TZ: Asia/Makassar
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./postgres/pgadmin-servers.json:/pgadmin4/servers.json
+    networks:
+      - dw_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Python ETL Service
+  etl:
+    build:
+      context: ..
+      dockerfile: docker/etl/Dockerfile
+    container_name: dw_etl
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432  # ← Internal container port tetap 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      ALERT_EMAIL_FROM: ${ALERT_EMAIL_FROM}
+      ALERT_EMAIL_TO: ${ALERT_EMAIL_TO}
+      ALERT_EMAIL_PASSWORD: ${ALERT_EMAIL_PASSWORD}
+      SMTP_SERVER: ${SMTP_SERVER}
+      SMTP_PORT: ${SMTP_PORT}
+      PYTHONUNBUFFERED: 1
+      TZ: Asia/Makassar
+    volumes:
+      - ../data:/app/data
+      - ../scripts:/app/scripts
+      - ../logs:/app/logs
+    networks:
+      - dw_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: tail -f /dev/null
+    restart: unless-stopped
+
+  # Streamlit Dashboard
+  dashboard:
+    build:
+      context: ..
+      dockerfile: docker/dashboard/Dockerfile
+    container_name: dw_dashboard
+    environment:
+      TZ: Asia/Makassar
+      DB_HOST: postgres
+      DB_PORT: 5432  # ← Internal container port tetap 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../dashboard/streamlit_app:/app/dashboard
+      - ../data:/app/data
+    networks:
+      - dw_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: streamlit run /app/dashboard/app.py --server.port=8501 --server.address=0.0.0.0
+    restart: unless-stopped
+
+networks:
+  dw_network:
+    driver: bridge
+    name: dw_pariwisata_network
+
+volumes:
+  postgres_data:
+    name: dw_postgres_data
+  pgadmin_data:
+    name: dw_pgadmin_data

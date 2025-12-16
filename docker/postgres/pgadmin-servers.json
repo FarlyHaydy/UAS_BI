@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "DW Pariwisata Jakarta 2025",
+      "Group": "Production",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "dw_pariwisata_jakarta",
+      "Username": "postgres",
+      "SSLMode": "prefer",
+      "Comment": "Data Warehouse for Jakarta Tourism - UAS Project"
+    }
+  }
+}

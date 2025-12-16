@@ -1,0 +1,1 @@
+[INFO] Monthly mode: today is day 10, not 01 -> skipping backup

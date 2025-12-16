@@ -1,0 +1,12 @@
+[2025-12-15 22:13:17] ==========================================
+[2025-12-15 22:13:17] STARTING DATABASE BACKUP (auto)
+[2025-12-15 22:13:17] ==========================================
+[2025-12-15 22:13:17] Environment: Local
+[2025-12-15 22:13:17] Database: dw_pariwisata_jakarta@postgres:5432
+[2025-12-15 22:13:18] Backup Directory: /c/File Perkuliahan/SEMESTER 7/File Matkul Semester 7/Kecerdasan Bisnis (BI)/File Tugas/UAS/UAS_DW_Pariwisata_Jakarta/scripts/disaster_recovery/../../data/backups/backups
+[2025-12-15 22:13:18] 
+[2025-12-15 22:13:18] Checking database connection...
+[2025-12-15 22:13:21] ❌ ERROR: Cannot connect to database!
+[2025-12-15 22:13:21]    Host: postgres:5432
+[2025-12-15 22:13:21]    Database: dw_pariwisata_jakarta
+[2025-12-15 22:13:22]    User: postgres

@@ -1,3 +1,4 @@
 berisi projek yang telah dibuat, dalam folder ini juga ada data lake, data raw, data staging
 pada folder laporan berisi laporan projek yang telah dibuat
 pada folder Bernama uas-bi adalah ppt yang digunakann dalam ppt
+alasan mengupload di github karena projek saya sekitar 400mb sementara simari hanya bisa mengupload 150mb jadi saya hanya menggunakan link github saja di simari untuk pengumpulan uas saya
